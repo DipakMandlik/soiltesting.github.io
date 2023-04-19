@@ -1,0 +1,100 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  // Check if a file was uploaded
+  if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
+    $targetDir = "uploads/"; // Directory to store uploaded images
+    $targetFile = $targetDir . basename($_FILES["image"]["name"]);
+    $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+    // Check if the uploaded file is an image
+    $allowedExtensions = array("jpg", "jpeg", "png", "gif");
+    if (in_array($imageFileType, $allowedExtensions)) {
+      // Move the uploaded file to the target directory
+      if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
+        echo "Image uploaded successfully!";
+      } else {
+        echo "Failed to upload image.";
+      }
+    } else {
+      echo "Only JPG, JPEG, PNG, and GIF images are allowed.";
+    }
+  } else {
+    echo "No file was uploaded.";
+  }
+}
+?>
+
+
+    <head>
+        <title>Soil Testing Services</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js"></script>
+    </head>
+
+    <body>
+        <header>
+            <h1>Soil Testing Services</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section id="hero-section">
+                <h2>Welcome to Our Soil Testing Services</h2>
+                <p>We provide comprehensive soil testing services to help you determine the quality and composition of your soil.</p>
+                <a href="services.html" class="cta-button">Learn More</a>
+            </section>
+            <section id="about-section">
+                <h2>About Us</h2>
+                <img src="bg3.jpg" alt="About Us Image">
+                <p>Our mission is to assist you in making informed decisions about your soil and ensuring the success of your projects.</p>
+            </section>
+            <section id="services-section">
+                <h2>Our Services</h2>
+                <ul>
+                    <li>
+                        <h3>Soil Composition Analysis</h3>
+                        <p>We analyze the composition of your soil to determine its nutrient levels, pH, and texture. This information helps you make informed decisions about fertilization, irrigation, and other soil management practices.</p>
+                    </li>
+                    <li>
+                        <h3>Contaminant Testing</h3>
+                        <p>We help to identify any contaminants present in your soil, such as heavy metals, pesticides, and pollutants. This information is crucial for assessing the environmental impact and safety of your soil.</p>
+                    </li>
+                    <li>
+                        <h3>Soil Health Assessment</h3>
+                        <p>We assess the overall health of your soil, including its organic matter content, microbial activity, and structure. This helps you determine the overall quality and productivity of your soil.</p>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="upload" class="section">
+                <div class="container">
+                    <h2>Upload Image</h2>
+                    <p>Please select an image file to upload.</p>
+                    <form id="upload-form" method="post" action="upload.php" enctype="multipart/form-data">
+                        <input type="file" name="image" id="image" required>
+                        <img id="preview-image" src="#" alt="Preview Image">
+                        <input type="submit" value="Upload">
+                    </form>
+                </div>
+            </section>
+
+
+            <section id="contact" class="section">
+                <div class="container">
+                    <h2>Contact Us</h2>
+                    <p>Please fill out the form below to get in touch with us.</p>
+                    <form id="contact-form" method="post" action="contact.php">
+                        <input type="text" name="name" id="name" placeholder="Your Name" required>
+                        <input type="email" name="email" id="email" placeholder="Your Email" required>
+                        <textarea name="message" id="message" placeholder="Your Message" required></textarea>
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+            </section>
